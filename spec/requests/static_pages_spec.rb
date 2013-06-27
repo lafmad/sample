@@ -4,21 +4,20 @@ describe "StaticPages" do
 
   describe "Home page" do
     it "should have the h1 'Sample App'" do
-    	visit root_path
-    	page.should have_content('h1','Sample App')
+    	visit users_path
+    	page.should have_selector('h1',text: 'Sample App')
     end
 
     it "should have the base title" do
-      visit root_path
+      visit users_path
       page.should have_selector('title',:text => "Sample")
     end
 
     it "should have a coustom title" do
-      visit root_path
-      page.should_not have_selector('title',text:'| Home')
+      visit users_path
+      page.should have_selector('title',:text=> '| Home')
     end
   end
-end
 
   describe "Help page" do
   	it "should have the content 'Help'" do
