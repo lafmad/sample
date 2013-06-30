@@ -3,18 +3,16 @@ require 'spec_helper'
 describe "StaticPages" do
 
   describe "Home page" do
+    before {visit root_path}
     it "should have the h1 'Sample App'" do
-    	visit users_path
     	page.should have_selector('h1',text: 'Sample App')
     end
 
     it "should have the base title" do
-      visit users_path
       page.should have_selector('title',:text => "Sample")
     end
 
     it "should have a coustom title" do
-      visit users_path
       page.should have_selector('title',:text=> '| Home')
     end
   end

@@ -7,11 +7,10 @@
 #  email      :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#
 
 require 'spec_helper'
 
-describe "User" do
+describe User do
   before { @user = User.new(name:"Example User",email: "user@example.com",password:"foobar",password_confirmation:"foobar")}
   subject {@user}
   it {should respond_to(:name)}
@@ -21,7 +20,9 @@ describe "User" do
   it {should respond_to(:password_confirmation)}
   it {should respond_to(:remember_token)}
   it {should respond_to(:authenticate)}
+  it {should respond_to(:admin)}
   it {should be_valid}
+  it {should_not be_admin}
 
   describe "when name is not present" do
   	before { @user.name = " "}
@@ -34,12 +35,7 @@ describe "User" do
   end
 
   describe "when name is too long" do
-    before {@user.name = "a"*21}
-    it {should_not be_valid}
-  end
-
-  describe "when name is too short" do
-    before {@user.name = "a"*5}
+    before {@user.name = "a"*51}
     it {should_not be_valid}
   end
 
@@ -104,6 +100,11 @@ describe "User" do
   describe "remember token" do
     before { @user.save}
     its(:remember_token) {should_not be_blank}
+  end
+
+  describe "with admin attribute set to 'true'" do
+    before { @user.toggle!(:admin)}
+    it {should be_admin}
   end
 
 end
